@@ -1,6 +1,6 @@
 ---
 title: "Activity 6"
-author: "Name"
+author: "Logan"
 output: github_document
 ---
 
@@ -46,7 +46,7 @@ Now, why is `by_speaker` untidy data?
 How would this data be organized if it were tidy?
 Do not use any of your new `{tidyr}` skills yet, only describe it.
 
-**Response**: 
+**Response**: This data is untidy because a variable is used as the first row.
 
 
 ![](README-img/noun_pause.png) **Planned Pause Point**: If you have any questions, contact your instructor. Otherwise feel free to continue on.
@@ -82,7 +82,14 @@ Remember that you can view the help documentation by using the `?` method in you
 2. Assign your reformatted dataset to `friends_tidy`, and 
 3. Name your code chunk either `pivot_contains` or `pivot_ends` depending on which helper function you used.
 
-
+```{r pivot_contains, message=FALSE}
+friends_tidy <- by_speaker %>% 
+  pivot_longer(
+    cols = starts_with("Se"),
+    names_to = "Season",
+    values_to = "Words"
+  )
+```
 
 
 ### Save the dataset
@@ -94,6 +101,9 @@ We can do this by writing it to a file within our directory.
 2. Call the file that is being created "`friends_tidy.csv`".
 3. Name your code chunk `writing_file`
 
+```{r writing_file, message=FALSE}
+write_csv(friends_tidy, here::here("data", "friends_tidy.csv"))
+```
 
 
 
@@ -175,6 +185,10 @@ friends_tidy %>%
 Write the code to take the tidy dataset and create one variable for each *speaker*.
 Call this code chunk `speaker_wide`.
 
+```{r speaker_wide, message=FALSE}
+friends_tidy %>% 
+  pivot_wider(names_from = speaker, values_from = Words)
+```
 
 
 
